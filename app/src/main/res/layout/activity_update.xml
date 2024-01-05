@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".UpdateActivity">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            android:padding="20dp"
+            android:background="@drawable/darkred_border">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="UPDATE PATIENT"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                android:textAlignment="center"
+                android:textColor="@color/darkred"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/UpdateTimedate"
+                android:hint="Day/Month/Year"
+                android:drawableLeft="@drawable/baseline_calendar_month_24"
+                android:drawablePadding="8dp"
+                android:background="@drawable/bottom_border"
+                android:textColor="@color/charcoal"
+                android:layout_marginTop="5dp"
+                android:gravity="start|center_vertical"
+                android:padding="16dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/text_epf"
+                app:errorEnabled="true"
+                app:counterEnabled="true"
+                app:helperTextTextColor="@color/redpep"
+                app:helperText="*Please enter 4 digit EPF Number"
+                app:counterMaxLength="4"
+                android:layout_marginTop="5dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/UpdateEpf"
+                    android:hint="EPF Number"
+                    android:maxLength="4"
+                    android:textColorHint="@color/darkred"
+                    android:drawableLeft="@drawable/baseline_123_24"
+                    android:drawablePadding="8dp"
+                    android:inputType="number"
+                    android:textColor="@color/charcoal"
+                    android:gravity="start|center_vertical"
+                    android:padding="16dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/text_name"
+                app:errorEnabled="true"
+                app:counterEnabled="true"
+                app:helperTextTextColor="@color/redpep">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/UpdateName"
+                    android:hint="Name"
+                    android:textColorHint="@color/darkred"
+                    android:drawableLeft="@drawable/baseline_person_24"
+                    android:drawablePadding="8dp"
+                    android:inputType="text"
+                    android:textColor="@color/charcoal"
+                    android:gravity="start|center_vertical"
+                    android:padding="16dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/text_department"
+                app:errorEnabled="true"
+                app:counterEnabled="true"
+                app:helperTextTextColor="@color/redpep">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/UpdateDepartment"
+                    android:hint="Department"
+                    android:textColorHint="@color/darkred"
+                    android:drawableLeft="@drawable/baseline_business_24"
+                    android:drawablePadding="8dp"
+                    android:inputType="text"
+                    android:textColor="@color/charcoal"
+                    android:gravity="start|center_vertical"
+                    android:padding="16dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/text_diagnose"
+                app:errorEnabled="true"
+                app:counterEnabled="true"
+                app:helperTextTextColor="@color/redpep">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/UpdateDiagnose"
+                    android:hint="Diagnose"
+                    android:textColorHint="@color/darkred"
+                    android:drawableLeft="@drawable/baseline_medical_information_24"
+                    android:drawablePadding="8dp"
+                    android:inputType="text"
+                    android:textColor="@color/charcoal"
+                    android:gravity="start|center_vertical"
+                    android:padding="16dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/text_medicine"
+                app:errorEnabled="true"
+                app:counterEnabled="true"
+                app:helperTextTextColor="@color/redpep">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/UpdateMedicine"
+                    android:hint="Medicine"
+                    android:textColorHint="@color/darkred"
+                    android:drawableLeft="@drawable/baseline_medication_liquid_24"
+                    android:drawablePadding="8dp"
+                    android:inputType="text"
+                    android:textColor="@color/charcoal"
+                    android:gravity="start|center_vertical"
+                    android:padding="16dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/text_note"
+                app:errorEnabled="true"
+                app:counterEnabled="true"
+                app:helperTextTextColor="@color/redpep">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/UpdateNote"
+                    android:hint="Note"
+                    android:textColorHint="@color/darkred"
+                    android:drawableLeft="@drawable/baseline_note_add_24"
+                    android:drawablePadding="8dp"
+                    android:inputType="text"
+                    android:textColor="@color/charcoal"
+                    android:gravity="start|center_vertical"
+                    android:padding="16dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/text_reported"
+                app:errorEnabled="true"
+                app:counterEnabled="true"
+                app:helperTextTextColor="@color/redpep">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/UpdateReported"
+                    android:hint="Reported"
+                    android:textColorHint="@color/darkred"
+                    android:drawableLeft="@drawable/baseline_mode_edit_24"
+                    android:drawablePadding="8dp"
+                    android:inputType="text"
+                    android:textColor="@color/charcoal"
+                    android:gravity="start|center_vertical"
+                    android:padding="16dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="*Please fill required date before update"
+                android:textColor="@color/redpep"
+                android:textStyle="bold"
+                android:textSize="12sp"/>
+
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:id="@+id/UpdateSaveBtn"
+                android:backgroundTint="@color/redpep"
+                android:textSize="18sp"
+                android:text="UPDATE"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</ScrollView>

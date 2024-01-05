@@ -1,0 +1,87 @@
+{
+  "project_info": {
+    "project_number": "47906808748",
+    "firebase_url": "https://piimedicalrecord-71d6f-default-rtdb.firebaseio.com",
+    "project_id": "piimedicalrecord-71d6f",
+    "storage_bucket": "piimedicalrecord-71d6f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47906808748:android:761f319fed95188c9d9009",
+        "android_client_info": {
+          "package_name": "com.example.medicalcenterclient"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApglTeowxeRC7IVNs6jmFNkT1BOC7NQl8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47906808748:android:4c7088e3a2fec27b9d9009",
+        "android_client_info": {
+          "package_name": "com.example.medicalrecordclient"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApglTeowxeRC7IVNs6jmFNkT1BOC7NQl8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47906808748:android:732d57c97e739f469d9009",
+        "android_client_info": {
+          "package_name": "com.example.piimedicalrecord"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApglTeowxeRC7IVNs6jmFNkT1BOC7NQl8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47906808748:android:3c0672953d5b9acb9d9009",
+        "android_client_info": {
+          "package_name": "com.medicalcenter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApglTeowxeRC7IVNs6jmFNkT1BOC7NQl8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
