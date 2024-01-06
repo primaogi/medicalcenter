@@ -1,5 +1,6 @@
 package com.medicalcenter;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,14 +10,25 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class DetailActivity extends AppCompatActivity {
 
     TextView detaildate, detailepf, detailname, detaildepartment, detaildiagnose, detailmedicine, detailnote, detailreported;
     Button deleteButton, updateButton;
     String key = "";
+    DatabaseReference userDbRef;
+    Boolean isAdmin = false;
+    Boolean isNurse = false;
+    Boolean isSuperuser = false;
+    ValueEventListener eventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +47,8 @@ public class DetailActivity extends AppCompatActivity {
         deleteButton = findViewById(R.id.deleteBtn);
         updateButton = findViewById(R.id.updateBtn);
 
+        getUserInfo();
+
         Bundle bundle = getIntent().getExtras();
         if (bundle != null){
             detaildate.setText(bundle.getString("Date"));
@@ -48,16 +62,6 @@ public class DetailActivity extends AppCompatActivity {
 
             key = bundle.getString("Key");
         }
-
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("PATIENT");
-                reference.child(key).removeValue();
-                Toast.makeText(DetailActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
 
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +77,61 @@ public class DetailActivity extends AppCompatActivity {
                         .putExtra("Reported", detailreported.getText().toString())
                         .putExtra("Key", key);
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void getUserInfo() {
+        userDbRef = FirebaseDatabase.getInstance().getReference("USER");
+        String currentUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+        eventListener = userDbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    for (DataSnapshot itemSnapshot: snapshot.getChildren()){
+                        UserModel user = itemSnapshot.getValue(UserModel.class);
+                        if(user != null){
+                            if(currentUser.contains("nurse")){
+                                isNurse = true;
+                            } else if (currentUser.contains("admin")){
+                                isAdmin = true;
+                            } else if(currentUser.contains("superuser")){
+                                isSuperuser = true;
+                            } else {
+                                isAdmin = false;
+                                isNurse = false;
+                                isSuperuser = false;
+                            }
+                        }
+                    }
+                }
+
+                setDeleteBtn();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                throw error.toException();
+            }
+        });
+    }
+
+    private void setDeleteBtn(){
+        if (isAdmin){
+            deleteButton.setVisibility(View.GONE);
+        } else if(isNurse){
+            deleteButton.setVisibility(View.GONE);
+            updateButton.setVisibility(View.GONE);
+        }
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("PATIENT");
+                reference.child(key).removeValue();
+                Toast.makeText(DetailActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }
