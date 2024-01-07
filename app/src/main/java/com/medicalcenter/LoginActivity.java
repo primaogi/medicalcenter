@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                 signupRedirectText.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(LoginActivity.this, SignupActivity.class));
+                        Toast.makeText(LoginActivity.this, "Please contact admin to register", Toast.LENGTH_SHORT).show();
                     }
                 });
 
