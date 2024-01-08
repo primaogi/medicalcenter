@@ -76,38 +76,42 @@
                     android:padding="16dp"/>
             </com.google.android.material.textfield.TextInputLayout>
 
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:id="@+id/checkremember"
+                android:text="Keep logged in"
+                android:textSize="17sp"
+                android:layout_gravity="center_horizontal"/>
+
             <Button
                 android:layout_width="150dp"
                 android:layout_height="60dp"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:id="@+id/login_btn"
                 android:text="LOGIN"
                 android:textSize="20sp"
                 android:textColor="@color/white"
                 app:cornerRadius ="10dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/SignupRedirectText"
-                android:text="Doesn't have account? Sign up"
-                android:layout_gravity="center"
-                android:padding="2dp"
-                android:textStyle="bold"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/darkred"
-                android:textSize="15sp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/forgot_pass"
-                android:text="Forgot Password?"
-                android:layout_gravity="center"
-                android:padding="2dp"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/darkred"
-                android:textSize="14sp"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/SignupRedirectText"
+        android:text="Doesn't have account? Sign up"
+        android:layout_gravity="center"
+        android:padding="2dp"
+        android:textStyle="bold"
+        android:textColor="@color/darkred"
+        android:textSize="15sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/forgot_pass"
+        android:text="Forgot Password?"
+        android:layout_gravity="center"
+        android:padding="2dp"
+        android:textColor="@color/darkred"
+        android:textSize="14sp"/>
 </LinearLayout>

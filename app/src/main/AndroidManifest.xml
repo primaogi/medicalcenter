@@ -13,10 +13,10 @@
         android:theme="@style/Theme.Medicalcenter"
         tools:targetApi="31">
         <activity
-            android:name=".AboutUs"
+            android:name=".TutorActivity"
             android:exported="false" />
         <activity
-            android:name=".SearchActivity"
+            android:name=".AboutUs"
             android:exported="false" />
         <activity
             android:name=".UpdateActivity"
