@@ -11,6 +11,7 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,12 +32,13 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
-public class UploadActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class UploadActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     Button saveUploadButton;
     EditText  uploadepf, uploadname,  uploaddepartment, uploaddiagnose, uploadmedicine, uploadnote, uploadreported;
-    TextView uploadtimedate;
+    TextView uploadtimedate, uploadtime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,7 @@ public class UploadActivity extends AppCompatActivity implements DatePickerDialo
         setContentView(R.layout.activity_upload);
 
         uploadtimedate = findViewById(R.id.UploadTimedate);
+        uploadtime = findViewById(R.id.UploadTime);
         uploadepf = findViewById(R.id.UploadEpf);
         uploadname = findViewById(R.id.UploadName);
         uploaddepartment = findViewById(R.id.UploadDepartment);
@@ -60,9 +64,18 @@ public class UploadActivity extends AppCompatActivity implements DatePickerDialo
             }
         });
 
+        uploadtime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment timePicker = new TimePickerFragment();
+                timePicker.show(getSupportFragmentManager(), "time picker");
+            }
+        });
+
         //TEXT WATCHER CANT UPLOAD WHEN FIELDS IS EMPTY
 
         uploadtimedate.addTextChangedListener(uploadTextWatcher);
+        uploadtime.addTextChangedListener(uploadTextWatcher);
         uploadepf.addTextChangedListener(uploadTextWatcher);
         uploadname.addTextChangedListener(uploadTextWatcher);
         uploaddepartment.addTextChangedListener(uploadTextWatcher);
@@ -80,6 +93,7 @@ public class UploadActivity extends AppCompatActivity implements DatePickerDialo
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             String timedateInput = uploadtimedate.getText().toString().trim();
+            String timeInput = uploadtimedate.getText().toString().trim();
             String epfInput = uploadepf.getText().toString().trim();
             String nameInput = uploadname.getText().toString().trim();
             String departmentInput = uploaddepartment.getText().toString().trim();
@@ -88,7 +102,7 @@ public class UploadActivity extends AppCompatActivity implements DatePickerDialo
             String noteInput = uploadnote.getText().toString().trim();
             String reportedInput = uploadreported.getText().toString().trim();
 
-            saveUploadButton.setEnabled(!timedateInput.isEmpty() && !epfInput.isEmpty() && !nameInput.isEmpty() && !departmentInput.isEmpty() && !reportedInput.isEmpty() && !diagnoseInput.isEmpty() && !medicineInput.isEmpty() && !noteInput.isEmpty());
+            saveUploadButton.setEnabled(!timedateInput.isEmpty() && !timeInput.isEmpty() && !epfInput.isEmpty() && !nameInput.isEmpty() && !departmentInput.isEmpty() && !reportedInput.isEmpty() && !diagnoseInput.isEmpty() && !medicineInput.isEmpty() && !noteInput.isEmpty());
 
             saveUploadButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -105,6 +119,12 @@ public class UploadActivity extends AppCompatActivity implements DatePickerDialo
         }
     };
 
+    //POP UP TIME PICKER
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        TextView textView = (TextView) findViewById(R.id.UploadTime);
+        textView.setText("" + hourOfDay + ":" + minute + " WIB");
+    }
 
     //POP UP CALENDAR
     @Override
@@ -122,6 +142,7 @@ public class UploadActivity extends AppCompatActivity implements DatePickerDialo
     // UPLOAD DATA STRING TO FIREBASE
     public void uploadData() {
         String timedate = uploadtimedate.getText().toString();
+        String time = uploadtime.getText().toString();
         String epf = uploadepf.getText().toString();
         String name = uploadname.getText().toString();
         String department = uploaddepartment.getText().toString();
@@ -130,7 +151,7 @@ public class UploadActivity extends AppCompatActivity implements DatePickerDialo
         String note = uploadnote.getText().toString();
         String reported = uploadreported.getText().toString();
 
-        DataClass dataClass = new DataClass(timedate, epf, name, department, diagnose, medicine, note, reported);
+        DataClass dataClass = new DataClass(timedate, time, epf, name, department, diagnose, medicine, note, reported);
 
         String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 
@@ -150,4 +171,6 @@ public class UploadActivity extends AppCompatActivity implements DatePickerDialo
                     }
                 });
     }
+
+
 }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,13 +26,14 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
-public class UpdateActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class UpdateActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     Button updateSaveButton;
     EditText updateepf, updatename,  updatedepartment, updatediagnose, updatemedicine, updatenote, updatereported;
-    TextView updatetimedate;
-    String timedate, epf, name, department, diagnose, medicine, note, reported;
+    TextView updatetimedate, updatetime;
+    String timedate, time, epf, name, department, diagnose, medicine, note, reported;
     String key;
     DatabaseReference databaseReference;
 
@@ -43,6 +46,7 @@ public class UpdateActivity extends AppCompatActivity implements DatePickerDialo
         updateSaveButton = findViewById(R.id.UpdateSaveBtn);
 
         updatetimedate = findViewById(R.id.UpdateTimedate);
+        updatetime = findViewById(R.id.UpdateTime);
         updateepf = findViewById(R.id.UpdateEpf);
         updatename = findViewById(R.id.UpdateName);
         updatedepartment = findViewById(R.id.UpdateDepartment);
@@ -54,6 +58,7 @@ public class UpdateActivity extends AppCompatActivity implements DatePickerDialo
         Bundle bundle = getIntent().getExtras();
         if (bundle != null){
             updatetimedate.setText(bundle.getString("Timedate"));
+            updatetime.setText(bundle.getString("Time"));
             updateepf.setText(bundle.getString("Epf"));
             updatename.setText(bundle.getString("Name"));
             updatedepartment.setText(bundle.getString("Department"));
@@ -74,8 +79,18 @@ public class UpdateActivity extends AppCompatActivity implements DatePickerDialo
             }
         });
 
+        updatetime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment timePicker = new TimePickerFragment();
+                timePicker.show(getSupportFragmentManager(), "time picker");
+            }
+        });
+
+
         //TEXT WATCHER CANT UPDATE WHEN DATE IS EMPTY
         updatetimedate.addTextChangedListener(updateTextWatcher);
+        updatetime.addTextChangedListener(updateTextWatcher);
     }
     TextWatcher updateTextWatcher = new TextWatcher() {
         @Override
@@ -86,8 +101,10 @@ public class UpdateActivity extends AppCompatActivity implements DatePickerDialo
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             String timedateInput = updatetimedate.getText().toString().trim();
+            String timeInput = updatetimedate.getText().toString().trim();
 
             updateSaveButton.setEnabled(!timedateInput.isEmpty());
+            updateSaveButton.setEnabled(!timeInput.isEmpty());
 
             updateSaveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -106,6 +123,13 @@ public class UpdateActivity extends AppCompatActivity implements DatePickerDialo
         }
     };
 
+    //POP UP TIME PICKER
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        TextView textView = (TextView) findViewById(R.id.UpdateTime);
+        textView.setText("" + hourOfDay + ":" + minute + " WIB");
+    }
+
     //POP UP CALENDAR
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -122,6 +146,7 @@ public class UpdateActivity extends AppCompatActivity implements DatePickerDialo
     // UPDATE DATA TO FIREBASE
     public void updateData(){
         timedate = updatetimedate.getText().toString().trim();
+        time = updatetime.getText().toString().trim();
         epf = updateepf.getText().toString().trim();
         name = updatename.getText().toString().trim();
         department = updatedepartment.getText().toString().trim();
@@ -130,7 +155,7 @@ public class UpdateActivity extends AppCompatActivity implements DatePickerDialo
         note = updatenote.getText().toString().trim();
         reported = updatereported.getText().toString().trim();
 
-        DataClass dataClass = new DataClass(timedate, epf, name, department, diagnose, medicine, note, reported);
+        DataClass dataClass = new DataClass(timedate, time, epf, name, department, diagnose, medicine, note, reported);
         databaseReference.setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

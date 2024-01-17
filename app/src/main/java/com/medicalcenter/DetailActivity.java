@@ -3,6 +3,7 @@ package com.medicalcenter;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +22,7 @@ import java.util.Objects;
 
 public class DetailActivity extends AppCompatActivity {
 
-    TextView detaildate, detailepf, detailname, detaildepartment, detaildiagnose, detailmedicine, detailnote, detailreported;
+    TextView detaildate, detailtime, detailepf, detailname, detaildepartment, detaildiagnose, detailmedicine, detailnote, detailreported;
     Button deleteButton, updateButton;
     String key = "";
     DatabaseReference userDbRef;
@@ -30,12 +31,14 @@ public class DetailActivity extends AppCompatActivity {
     Boolean isSuperuser = false;
     ValueEventListener eventListener;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
         detaildate = findViewById(R.id.detailDate);
+        detailtime = findViewById(R.id.detailTime);
         detailepf = findViewById(R.id.detailEpf);
         detailname = findViewById(R.id.detailName);
         detaildepartment = findViewById(R.id.detailDept);
@@ -52,6 +55,7 @@ public class DetailActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null){
             detaildate.setText(bundle.getString("Date"));
+            detailtime.setText(bundle.getString("Time"));
             detailepf.setText(bundle.getString("Epf"));
             detailname.setText(bundle.getString("Name"));
             detaildepartment.setText(bundle.getString("Department"));
@@ -68,6 +72,7 @@ public class DetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(DetailActivity.this, UpdateActivity.class)
                         .putExtra("Date", detaildate.getText().toString())
+                        .putExtra("Time", detailtime.getText().toString())
                         .putExtra("Epf", detailepf.getText().toString())
                         .putExtra("Name", detailname.getText().toString())
                         .putExtra("Department", detaildepartment.getText().toString())

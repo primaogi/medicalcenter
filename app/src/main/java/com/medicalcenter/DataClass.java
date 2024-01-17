@@ -2,6 +2,7 @@ package com.medicalcenter;
 
 public class DataClass {
     private String dataTimedate;
+    private String dataTime;
     private String dataEpf;
     private String dataName;
     private String dataDepartment;
@@ -21,6 +22,10 @@ public class DataClass {
 
     public String getDataTimedate() {
         return dataTimedate;
+    }
+
+    public String getDataTime() {
+        return dataTime;
     }
 
     public String getDataEpf() {
@@ -51,8 +56,9 @@ public class DataClass {
         return dataReported;
     }
 
-    public DataClass(String dataTimedate, String dataEpf, String dataName, String dataDepartment, String dataDiagnose, String dataMedicine, String dataNote, String dataReported) {
+    public DataClass(String dataTimedate, String dataTime, String dataEpf, String dataName, String dataDepartment, String dataDiagnose, String dataMedicine, String dataNote, String dataReported) {
         this.dataTimedate = dataTimedate;
+        this.dataTime = dataTime;
         this.dataEpf = dataEpf;
         this.dataName = dataName;
         this.dataDepartment = dataDepartment;

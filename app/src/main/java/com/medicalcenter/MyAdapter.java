@@ -42,6 +42,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
             public void onClick(View v) {
                 Intent intent = new Intent(context, DetailActivity.class);
                 intent.putExtra("Date", dataList.get(holder.getAdapterPosition()).getDataTimedate());
+                intent.putExtra("Time", dataList.get(holder.getAdapterPosition()).getDataTime());
                 intent.putExtra("Epf", dataList.get(holder.getAdapterPosition()).getDataEpf());
                 intent.putExtra("Name", dataList.get(holder.getAdapterPosition()).getDataName());
                 intent.putExtra("Department", dataList.get(holder.getAdapterPosition()).getDataDepartment());
