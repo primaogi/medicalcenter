@@ -303,7 +303,6 @@
                 android:id="@+id/detailReported"
                 android:textAlignment="viewEnd"
                 android:text="Reported"
-                android:layout_below="@id/detailNote"
                 android:textSize="20sp"
                 android:textColor="@color/charcoal"/>
         </androidx.cardview.widget.CardView>
