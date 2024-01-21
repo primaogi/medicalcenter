@@ -31,7 +31,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -157,8 +159,10 @@ public class UploadActivity extends AppCompatActivity implements DatePickerDialo
         DataClass dataClass = new DataClass(timedate, time, epf, name, department, diagnose, medicine, note, reported);
 
         String dataId = UUID.randomUUID().toString();
+        String pattern = "dd-MM-yyyy";
+        String dateInString = new SimpleDateFormat(pattern).format(new Date());
 
-        String currentDate = DateFormat.getDateInstance().format(Calendar.getInstance().getTime()) + " - " + dataId;
+        String currentDate = dateInString + " - " + dataId;
 
         FirebaseDatabase.getInstance().getReference("PATIENT").child(currentDate)
                 .setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
