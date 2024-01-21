@@ -33,6 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.UUID;
 
 public class UploadActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
@@ -108,6 +109,8 @@ public class UploadActivity extends AppCompatActivity implements DatePickerDialo
                 @Override
                 public void onClick(View v) {
                     uploadData();
+                    Intent intent = new Intent(UploadActivity.this, MainActivity.class);
+                    startActivity(intent);
                 }
             });
 
@@ -153,7 +156,9 @@ public class UploadActivity extends AppCompatActivity implements DatePickerDialo
 
         DataClass dataClass = new DataClass(timedate, time, epf, name, department, diagnose, medicine, note, reported);
 
-        String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+        String dataId = UUID.randomUUID().toString();
+
+        String currentDate = DateFormat.getDateInstance().format(Calendar.getInstance().getTime()) + " - " + dataId;
 
         FirebaseDatabase.getInstance().getReference("PATIENT").child(currentDate)
                 .setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {

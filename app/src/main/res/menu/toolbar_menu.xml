@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        app:showAsAction="always"
+        android:title=" "
+        android:icon="@drawable/baseline_more_vert_24">
+        <menu>
+            <item
+                android:title="Tutorial"
+                android:id="@+id/tutorial"
+                app:showAsAction="never"
+                android:icon="@drawable/baseline_question_mark_24"/>
+            <item
+                android:title="About us"
+                android:id="@+id/abouttoolbar"
+                app:showAsAction="never"
+                android:icon="@drawable/baseline_info_outline_24"/>
+            <item
+                android:title="Logout"
+                android:id="@+id/logout"
+                app:showAsAction="never"
+                android:icon="@drawable/baseline_exit_to_app_24"/>
+        </menu>
+    </item>
+</menu>
