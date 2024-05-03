@@ -45,7 +45,6 @@ public class LoginActivity extends AppCompatActivity {
         remember = findViewById(R.id.checkremember);
         loginButton = findViewById(R.id.login_btn);
         signupRedirectText = findViewById(R.id.SignupRedirectText);
-        forgotPassword = findViewById(R.id.forgot_pass);
 
         SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
         String checkbox = preferences.getString("remember", "");
@@ -113,52 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                 signupRedirectText.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(LoginActivity.this, "Please contact admin to register", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                forgotPassword.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                        View dialogView = getLayoutInflater().inflate(R.layout.dialog_forgot, null);
-                        EditText emailBox = dialogView.findViewById(R.id.emailbox);
-
-                        builder.setView(dialogView);
-                        AlertDialog dialog = builder.create();
-
-                        dialogView.findViewById(R.id.btnReset).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                String userEmail = emailBox.getText().toString();
-
-                                if (TextUtils.isEmpty(userEmail) && !Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()){
-                                    Toast.makeText(LoginActivity.this, "Enter your registered email id", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                                auth.sendPasswordResetEmail(userEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()){
-                                            Toast.makeText(LoginActivity.this, "Please check your email", Toast.LENGTH_SHORT).show();
-                                            dialog.dismiss();
-                                        } else {
-                                            Toast.makeText(LoginActivity.this, "Unable to send reset message", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
-                            }
-                        });
-                        dialogView.findViewById(R.id.btnCancel).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
-                            }
-                        });
-                        if (dialog.getWindow() != null){
-                            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-                        }
-                        dialog.show();
+                        startActivity(new Intent(LoginActivity.this, SignupActivity.class));
                     }
                 });
     }

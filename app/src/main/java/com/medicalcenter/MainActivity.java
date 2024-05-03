@@ -149,6 +149,8 @@ public class MainActivity extends AppCompatActivity {
         for (DataClass dataClass: dataList){
             if (dataClass.getDataEpf().toLowerCase().contains(text.toLowerCase())){
                 searchList.add(dataClass);
+            } else if (dataClass.getDataName().toLowerCase().contains(text.toLowerCase())) {
+                searchList.add(dataClass);
             }
         }
         adapter.searchDataList(searchList);

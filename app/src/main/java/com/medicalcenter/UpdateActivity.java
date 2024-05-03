@@ -110,6 +110,7 @@ public class UpdateActivity extends AppCompatActivity implements DatePickerDialo
                 @Override
                 public void onClick(View v) {
                     updateData();
+                    finish();
                     Intent intent = new Intent(UpdateActivity.this, MainActivity.class);
                     startActivity(intent);
                 }

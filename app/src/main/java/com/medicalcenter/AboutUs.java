@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 public class AboutUs extends AppCompatActivity {
 
-    ImageView instagram, twitter;
+    ImageView instagram, twitter, github;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,8 +18,8 @@ public class AboutUs extends AppCompatActivity {
         setContentView(R.layout.activity_about_us);
 
         instagram = findViewById(R.id.instagram);
+        github = findViewById(R.id.github);
         twitter = findViewById(R.id.x);
-
         instagram.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -31,6 +31,13 @@ public class AboutUs extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 gotourl("https://twitter.com/mostly_prima");
+            }
+        });
+
+        github.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotourl("https://github.com/primaogi");
             }
         });
     }

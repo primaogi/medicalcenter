@@ -105,13 +105,4 @@
         android:textStyle="bold"
         android:textColor="@color/darkred"
         android:textSize="15sp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/forgot_pass"
-        android:text="Forgot Password?"
-        android:layout_gravity="center"
-        android:padding="2dp"
-        android:textColor="@color/darkred"
-        android:textSize="14sp"/>
 </LinearLayout>
