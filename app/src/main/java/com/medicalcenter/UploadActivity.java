@@ -128,7 +128,7 @@ public class UploadActivity extends AppCompatActivity implements DatePickerDialo
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         TextView textView = (TextView) findViewById(R.id.UploadTime);
-        textView.setText("" + hourOfDay + ":" + minute + " WIB");
+        textView.setText("" + hourOfDay + " : " + minute + " WIB");
     }
 
     //POP UP CALENDAR

@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,13 +35,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    FloatingActionButton fab;
+    FloatingActionButton fab, addUser;
     RecyclerView recyclerView;
     List<DataClass> dataList;
     DatabaseReference databaseReference;
     ValueEventListener eventListener;
     SearchView searchView;
     MyAdapter adapter;
+    Boolean isGmail = false;
+    Boolean isAdmin = false;
+    Boolean isNurse = false;
+    Boolean isSuperuser = false;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -49,12 +54,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         fab = findViewById(R.id.addperson);
+        addUser = findViewById(R.id.addUser);
         recyclerView = findViewById(R.id.recyclerView);
         searchView = findViewById(R.id.search);
         searchView.clearFocus();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        getUserInfo();
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 1);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -113,6 +121,70 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        addUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SignupActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void getUserInfo() {
+        databaseReference = FirebaseDatabase.getInstance().getReference("USER");
+        String currentUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+        eventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    for (DataSnapshot itemSnapshot: snapshot.getChildren()){
+                        UserModel user = itemSnapshot.getValue(UserModel.class);
+                        if(user != null){
+                            if(currentUser.contains("nurse")){
+                                isNurse = true;
+                            } else if (currentUser.contains("admin")){
+                                isAdmin = true;
+                            } else if(currentUser.contains("superuser")){
+                                isSuperuser = true;
+                            } else if(currentUser.contains("gmail")){
+                                isGmail = true;
+                            }else {
+                                isAdmin = false;
+                                isNurse = false;
+                                isSuperuser = false;
+                                isGmail = false;
+                            }
+                        }
+                    }
+                }
+
+                setfabview();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                throw error.toException();
+            }
+        });
+    }
+
+    private void setfabview() {
+        if (isAdmin){
+            fab.setVisibility(View.VISIBLE);
+            addUser.setVisibility(View.GONE);
+        } else if(isNurse){
+            fab.setVisibility(View.VISIBLE);
+            addUser.setVisibility(View.GONE);
+        }  else if(isSuperuser){
+            addUser.setVisibility(View.VISIBLE);
+            fab.setVisibility(View.VISIBLE);
+        } else {
+            fab.setVisibility(View.GONE);
+            addUser.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -127,8 +199,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.abouttoolbar){
             Intent intent = new Intent(MainActivity.this, AboutUs.class);
             startActivity(intent);
-        }
-        if (id == R.id.logout){
+        } else if (id == R.id.logout) {
             SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("remember", "false");
@@ -136,9 +207,11 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
-        }
-        if (id == R.id.tutorial){
+        } else if (id == R.id.tutorial) {
             Intent intent = new Intent(MainActivity.this, TutorActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.addUser) {
+            Intent intent = new Intent(MainActivity.this, SignupActivity.class);
             startActivity(intent);
         }
         return true;

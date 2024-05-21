@@ -1,5 +1,6 @@
 package com.medicalcenter;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,15 +25,16 @@ public class DetailActivity extends AppCompatActivity {
     Button deleteButton, updateButton;
     String key = "";
     DatabaseReference userDbRef;
+    AlertDialog.Builder builder;
     Boolean isAdmin = false;
     Boolean isNurse = false;
     Boolean isSuperuser = false;
+    Boolean isGmail = false;
     ValueEventListener eventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
 
         detaildate = findViewById(R.id.detailDate);
         detailtime = findViewById(R.id.detailTime);
@@ -45,6 +48,8 @@ public class DetailActivity extends AppCompatActivity {
 
         deleteButton = findViewById(R.id.deleteBtn);
         updateButton = findViewById(R.id.updateBtn);
+
+        builder = new AlertDialog.Builder(this);
 
         getUserInfo();
 
@@ -99,10 +104,13 @@ public class DetailActivity extends AppCompatActivity {
                                 isAdmin = true;
                             } else if(currentUser.contains("superuser")){
                                 isSuperuser = true;
-                            } else {
+                            } else if(currentUser.contains("gmail")){
+                                isGmail = true;
+                            }else {
                                 isAdmin = false;
                                 isNurse = false;
                                 isSuperuser = false;
+                                isGmail = false;
                             }
                         }
                     }
@@ -124,17 +132,35 @@ public class DetailActivity extends AppCompatActivity {
         } else if(isNurse){
             deleteButton.setVisibility(View.GONE);
             updateButton.setVisibility(View.GONE);
+        } else if(isGmail){
+            deleteButton.setVisibility(View.GONE);
+            updateButton.setVisibility(View.GONE);
         }
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("PATIENT");
-                reference.child(key).removeValue();
-                Toast.makeText(DetailActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(DetailActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                builder.setTitle("Delete")
+                        .setMessage("Are you sure?")
+                        .setCancelable(true)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("PATIENT");
+                                reference.child(key).removeValue();
+                                Toast.makeText(DetailActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(DetailActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
             }
         });
     }
